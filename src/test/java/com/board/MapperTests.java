@@ -44,9 +44,9 @@ public class MapperTests {
 	@Test
 	public void testOfUpdate() {
 		BoardDTO params = new BoardDTO();
-		params.setTitle("제목e");
-		params.setContent("내용e");
-		params.setWriter("쓰니e");
+		params.setTitle("제목");
+		params.setContent("내용");
+		params.setWriter("쓰니");
 		params.setIdx((long) 2);
 
 		int result = boardMapper.updateBoard(params);

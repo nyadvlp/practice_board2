@@ -42,4 +42,14 @@ public class BoardDTO {
 	/** 삭제일 */
 	private LocalDateTime deleteTime;
 
+	@Override
+	public String toString() {
+		return "BoardDTO [idx=" + idx + ", title=" + title + ", content=" + content + ", writer=" + writer
+				+ ", viewCnt=" + viewCnt + ", noticeYn=" + noticeYn + ", secretYn=" + secretYn + ", deleteYn="
+				+ deleteYn + ", insertTime=" + insertTime + ", updateTime=" + updateTime + ", deleteTime=" + deleteTime
+				+ "]";
+	}
+	
+	
+
 }

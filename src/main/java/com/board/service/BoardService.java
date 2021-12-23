@@ -14,4 +14,6 @@ public interface BoardService {
 	
 	public List<BoardDTO> getBoardList();
 
+	public boolean cntPlus(Long idx);
+
 }

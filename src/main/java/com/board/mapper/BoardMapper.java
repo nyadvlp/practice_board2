@@ -25,4 +25,6 @@ public interface BoardMapper {
 	// count
 	public int selectBoardTotalCount();
 
+	public boolean cntPlus(Long idx);
+
 }

@@ -110,5 +110,12 @@ public class MapperTests {
 		}
 		System.out.println(":: 총 작성글 수 - " + count + "개 ::");
 	}
+	
+	@Test
+	public void testOfCntPlus( ) {
+		Long idx = (long) 5;
+		boolean result = boardMapper.cntPlus(idx);
+		System.out.println(":: 결과 - " + result);
+	}
 
 }

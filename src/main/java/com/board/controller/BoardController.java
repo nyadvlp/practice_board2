@@ -63,12 +63,60 @@ public class BoardController {
 
 	@GetMapping(value = "/board/list")
 	public String openBoardList(Model model) {
-		
+
 		System.out.println(":: CONTROLLER - /board/list ::");
-		
+
 		List<BoardDTO> boardList = boardService.getBoardList();
 		model.addAttribute("boardList", boardList);
 		return "board/list";
+	}
+
+	@GetMapping(value = "/board/view")
+	public String openBoardDetail(@RequestParam(value = "idx", required = false) Long idx, Model model) {
+
+		System.out.println(":: CONTROLLER - /board/view (idx : " + idx + ") ::");
+
+		if (idx == null) {
+			return "redirect:/board/list";
+		}
+
+		BoardDTO boardDTO = boardService.getBoardDetail(idx);
+		if (boardDTO == null || "Y".equals(boardDTO.getDeleteYn())) {
+			return "redirect:/board/list";
+		}
+
+		model.addAttribute("board", boardDTO);
+
+		// 조회수 ++
+		boolean isPlus = boardService.cntPlus(idx);
+		System.out.println("isPlus : " + isPlus);
+
+		return "board/view";
+
+	}
+
+	@PostMapping(value = "board/delete")
+	public String deleteBoard(@RequestParam(value = "idx", required = false) Long idx) {
+
+		System.out.println(":: CONTROLLER - /board/delete (idx : " + idx + ") ::");
+
+		if (idx == null) {
+			return "redirect:/board/list";
+		}
+
+		try {
+			boolean isDeleted = boardService.deleteBoard(idx);
+			System.out.println("isDeleted : " + isDeleted);
+			if (isDeleted == false) {
+				System.out.println("삭제 실패");
+			}
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:/board/list";
 	}
 
 }

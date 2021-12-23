@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.board.domain.BoardDTO;
 import com.board.service.BoardService;
+import com.board.util.UiUtils;
 
 @Controller
-public class BoardController {
+public class BoardController extends UiUtils {
 
 	@Autowired
 	private BoardService boardService;
@@ -40,7 +41,7 @@ public class BoardController {
 	}
 
 	@PostMapping(value = "/board/register")
-	public String registerBoard(final BoardDTO params) {
+	public String registerBoard(final BoardDTO params, Model model) {
 
 		System.out.println(":: CONTROLLER - /board/register ::");
 		System.out.println("params : " + params.toString());
@@ -49,16 +50,16 @@ public class BoardController {
 			boolean isRegistered = boardService.registerBoard(params);
 			System.out.println("isRegistered : " + isRegistered);
 			if (isRegistered == false) {
-				// 게시글 등록에 실패하였다는 메시지를 전달
+				return showMessageWithRedirect("게시글 등록에 실패하였습니다.", "/board/list", Method.GET, null, model);
 			}
 		} catch (DataAccessException e) {
-			// 데이터베이스 처리 과정에 문제가 발생하였다는 메시지를 전달
+			return showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다.", "/board/list", Method.GET, null, model);
 
 		} catch (Exception e) {
-			// 시스템에 문제가 발생하였다는 메시지를 전달
+			return showMessageWithRedirect("시스템에 문제가 발생하였습니다.", "/board/list", Method.GET, null, model);
 		}
 
-		return "redirect:/board/list";
+		return showMessageWithRedirect("게시글 등록이 완료되었습니다.", "/board/list", Method.GET, null, model);
 	}
 
 	@GetMapping(value = "/board/list")
@@ -96,12 +97,12 @@ public class BoardController {
 	}
 
 	@PostMapping(value = "board/delete")
-	public String deleteBoard(@RequestParam(value = "idx", required = false) Long idx) {
+	public String deleteBoard(@RequestParam(value = "idx", required = false) Long idx, Model model) {
 
 		System.out.println(":: CONTROLLER - /board/delete (idx : " + idx + ") ::");
 
 		if (idx == null) {
-			return "redirect:/board/list";
+			return showMessageWithRedirect("올바르지 않은 접근입니다.", "/board/list", Method.GET, null, model);
 		}
 
 		try {
@@ -109,14 +110,15 @@ public class BoardController {
 			System.out.println("isDeleted : " + isDeleted);
 			if (isDeleted == false) {
 				System.out.println("삭제 실패");
+				return showMessageWithRedirect("게시글 삭제에 실패하였습니다.", "/board/list", Method.GET, null, model);
 			}
 		} catch (DataAccessException e) {
-			e.printStackTrace();
+			return showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다.", "/board/list", Method.GET, null, model);
 		} catch (Exception e) {
-			e.printStackTrace();
+			return showMessageWithRedirect("시스템에 문제가 발생하였습니다.", "/board/list", Method.GET, null, model);
 		}
 
-		return "redirect:/board/list";
+		return showMessageWithRedirect("게시글 삭제가 완료되었습니다.", "/board/list", Method.GET, null, model);
 	}
 
 }

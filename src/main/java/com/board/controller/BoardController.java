@@ -1,5 +1,7 @@
 package com.board.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
@@ -39,11 +41,10 @@ public class BoardController {
 
 	@PostMapping(value = "/board/register")
 	public String registerBoard(final BoardDTO params) {
-		
+
 		System.out.println(":: CONTROLLER - /board/register ::");
-		
 		System.out.println("params : " + params.toString());
-		
+
 		try {
 			boolean isRegistered = boardService.registerBoard(params);
 			System.out.println("isRegistered : " + isRegistered);
@@ -58,6 +59,16 @@ public class BoardController {
 		}
 
 		return "redirect:/board/list";
+	}
+
+	@GetMapping(value = "/board/list")
+	public String openBoardList(Model model) {
+		
+		System.out.println(":: CONTROLLER - /board/list ::");
+		
+		List<BoardDTO> boardList = boardService.getBoardList();
+		model.addAttribute("boardList", boardList);
+		return "board/list";
 	}
 
 }

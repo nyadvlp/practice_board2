@@ -13,16 +13,16 @@
 			/* <![CDATA[ */
 
 				window.onload = function() {
-					var message = /*[[ ${message} ]]*/;
+					var message = /*[[ ${message} ]]*/ null;
 					if (isEmpty(message) == false) {
 						alert(message);
 					}
 
-					var params = /*[[ ${params} ]]*/;
+					var params = /*[[ ${params} ]]*/ null;
 					if (isEmpty(params) == false) {
 						document.dataForm.submit();
 					} else {
-						var redirectUri = /*[[ ${redirectUri} ]]*/;
+						var redirectUri = /*[[ ${redirectUri} ]]*/ null;
 						location.href = redirectUri;
 					}
 				}

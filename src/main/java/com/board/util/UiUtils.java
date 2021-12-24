@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.board.controller.Method;
 
-@Controller
+// @Controller
 public class UiUtils {
 
 	public String showMessageWithRedirect(

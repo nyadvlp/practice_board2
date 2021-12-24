@@ -20,12 +20,8 @@ public class BoardController extends UiUtils {
 	@Autowired
 	private BoardService boardService;
 
-	// 메서드
-
 	@GetMapping(value = "/board/write")
 	public String openBoardWrite(Model model, @RequestParam(value = "idx", required = false) Long idx) {
-
-		System.out.println(":: CONTROLLER - /board/write ::");
 
 		if (idx == null) {
 			model.addAttribute("board", new BoardDTO());
@@ -43,7 +39,6 @@ public class BoardController extends UiUtils {
 	@PostMapping(value = "/board/register")
 	public String registerBoard(final BoardDTO params, Model model) {
 
-		System.out.println(":: CONTROLLER - /board/register ::");
 		System.out.println("params : " + params.toString());
 
 		try {
@@ -65,8 +60,6 @@ public class BoardController extends UiUtils {
 	@GetMapping(value = "/board/list")
 	public String openBoardList(Model model) {
 
-		System.out.println(":: CONTROLLER - /board/list ::");
-
 		List<BoardDTO> boardList = boardService.getBoardList();
 		model.addAttribute("boardList", boardList);
 		return "board/list";
@@ -74,8 +67,6 @@ public class BoardController extends UiUtils {
 
 	@GetMapping(value = "/board/view")
 	public String openBoardDetail(@RequestParam(value = "idx", required = false) Long idx, Model model) {
-
-		System.out.println(":: CONTROLLER - /board/view (idx : " + idx + ") ::");
 
 		if (idx == null) {
 			return "redirect:/board/list";
@@ -98,8 +89,6 @@ public class BoardController extends UiUtils {
 
 	@PostMapping(value = "board/delete")
 	public String deleteBoard(@RequestParam(value = "idx", required = false) Long idx, Model model) {
-
-		System.out.println(":: CONTROLLER - /board/delete (idx : " + idx + ") ::");
 
 		if (idx == null) {
 			return showMessageWithRedirect("올바르지 않은 접근입니다.", "/board/list", Method.GET, null, model);

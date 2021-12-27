@@ -15,7 +15,7 @@ import com.board.service.BoardService;
 import com.board.util.UiUtils;
 
 @Controller
-public class BoardController extends UiUtils {
+public class BoardController {
 
 	@Autowired
 	private BoardService boardService;
@@ -45,16 +45,16 @@ public class BoardController extends UiUtils {
 			boolean isRegistered = boardService.registerBoard(params);
 			System.out.println("isRegistered : " + isRegistered);
 			if (isRegistered == false) {
-				return showMessageWithRedirect("게시글 등록에 실패하였습니다.", "/board/list", Method.GET, null, model);
+				return UiUtils.showMessageWithRedirect("게시글 등록에 실패하였습니다.", "/board/list", Method.GET, null, model);
 			}
 		} catch (DataAccessException e) {
-			return showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다.", "/board/list", Method.GET, null, model);
+			return UiUtils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다.", "/board/list", Method.GET, null, model);
 
 		} catch (Exception e) {
-			return showMessageWithRedirect("시스템에 문제가 발생하였습니다.", "/board/list", Method.GET, null, model);
+			return UiUtils.showMessageWithRedirect("시스템에 문제가 발생하였습니다.", "/board/list", Method.GET, null, model);
 		}
 
-		return showMessageWithRedirect("게시글 등록이 완료되었습니다.", "/board/list", Method.GET, null, model);
+		return UiUtils.showMessageWithRedirect("게시글 등록이 완료되었습니다.", "/board/list", Method.GET, null, model);
 	}
 
 	@GetMapping(value = "/board/list")
@@ -91,7 +91,7 @@ public class BoardController extends UiUtils {
 	public String deleteBoard(@RequestParam(value = "idx", required = false) Long idx, Model model) {
 
 		if (idx == null) {
-			return showMessageWithRedirect("올바르지 않은 접근입니다.", "/board/list", Method.GET, null, model);
+			return UiUtils.showMessageWithRedirect("올바르지 않은 접근입니다.", "/board/list", Method.GET, null, model);
 		}
 
 		try {
@@ -99,15 +99,15 @@ public class BoardController extends UiUtils {
 			System.out.println("isDeleted : " + isDeleted);
 			if (isDeleted == false) {
 				System.out.println("삭제 실패");
-				return showMessageWithRedirect("게시글 삭제에 실패하였습니다.", "/board/list", Method.GET, null, model);
+				return UiUtils.showMessageWithRedirect("게시글 삭제에 실패하였습니다.", "/board/list", Method.GET, null, model);
 			}
 		} catch (DataAccessException e) {
-			return showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다.", "/board/list", Method.GET, null, model);
+			return UiUtils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다.", "/board/list", Method.GET, null, model);
 		} catch (Exception e) {
-			return showMessageWithRedirect("시스템에 문제가 발생하였습니다.", "/board/list", Method.GET, null, model);
+			return UiUtils.showMessageWithRedirect("시스템에 문제가 발생하였습니다.", "/board/list", Method.GET, null, model);
 		}
 
-		return showMessageWithRedirect("게시글 삭제가 완료되었습니다.", "/board/list", Method.GET, null, model);
+		return UiUtils.showMessageWithRedirect("게시글 삭제가 완료되었습니다.", "/board/list", Method.GET, null, model);
 	}
 
 }

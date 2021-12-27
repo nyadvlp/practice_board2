@@ -8,10 +8,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.board.controller.Method;
 
-// @Controller
 public class UiUtils {
 
-	public String showMessageWithRedirect(
+	public static String showMessageWithRedirect(
 			@RequestParam(value = "message", required = false) String message,
 			@RequestParam(value = "redirectUri", required = false) String redirectUri,
 			@RequestParam(value = "method", required = false) Method method,

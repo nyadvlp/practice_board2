@@ -25,6 +25,12 @@ public class BoardServiceImpl implements BoardService {
 			// idx가 있으면 글을 수정
 			queryResult = boardMapper.updateBoard(params);
 		}
+		
+//		// 트랜잭션 테스트용
+//		BoardDTO board = null;
+//		System.out.println("***** 여기가 테스트 ********");
+//		System.out.println(board.getTitle());
+		
 		return (queryResult == 1) ? true : false;
 	}
 

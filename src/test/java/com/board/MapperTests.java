@@ -9,6 +9,7 @@ import org.springframework.util.CollectionUtils;
 
 import com.board.domain.BoardDTO;
 import com.board.mapper.BoardMapper;
+import com.board.paging.Criteria;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -81,21 +82,22 @@ public class MapperTests {
 		}
 	}
 
-	@Test
-	public void testSelectList() {
-		int boardTotalCount = boardMapper.selectBoardTotalCount();
-		System.out.println(":: boardTotalCount - " + boardTotalCount + " ::");
-
-		if (boardTotalCount > 0) {
-			List<BoardDTO> boardList = boardMapper.selectBoardList();
-			if (CollectionUtils.isEmpty(boardList) == false) {
-				for (BoardDTO board : boardList) {
-					System.out.println(":: 글 정보 - " + board.getTitle() + " by " + board.getWriter() + " ::");
-				}
-			}
-		}
-
-	}
+//	@Test
+//	public void testSelectList() {
+//		Criteria criteria = new Criteria();
+//		int boardTotalCount = boardMapper.selectBoardTotalCount(criteria);
+//		System.out.println(":: boardTotalCount - " + boardTotalCount + " ::");
+//
+//		if (boardTotalCount > 0) {
+//			List<BoardDTO> boardList = boardMapper.selectBoardList(criteria);
+//			if (CollectionUtils.isEmpty(boardList) == false) {
+//				for (BoardDTO board : boardList) {
+//					System.out.println(":: 글 정보 - " + board.getTitle() + " by " + board.getWriter() + " ::");
+//				}
+//			}
+//		}
+//
+//	}
 
 	@Test
 	public void testOfMultiInsert() {

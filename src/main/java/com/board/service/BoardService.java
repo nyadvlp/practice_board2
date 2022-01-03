@@ -3,6 +3,7 @@ package com.board.service;
 import java.util.List;
 
 import com.board.domain.BoardDTO;
+import com.board.paging.Criteria;
 
 public interface BoardService {
 	
@@ -12,7 +13,7 @@ public interface BoardService {
 	
 	public boolean deleteBoard(Long idx);
 	
-	public List<BoardDTO> getBoardList();
+	public List<BoardDTO> getBoardList(BoardDTO params);
 
 	public boolean cntPlus(Long idx);
 

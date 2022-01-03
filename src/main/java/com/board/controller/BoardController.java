@@ -7,10 +7,12 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.board.domain.BoardDTO;
+import com.board.paging.Criteria;
 import com.board.service.BoardService;
 import com.board.util.UiUtils;
 
@@ -48,7 +50,8 @@ public class BoardController {
 				return UiUtils.showMessageWithRedirect("게시글 등록에 실패하였습니다.", "/board/list", Method.GET, null, model);
 			}
 		} catch (DataAccessException e) {
-			return UiUtils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다.", "/board/list", Method.GET, null, model);
+			return UiUtils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다.", "/board/list", Method.GET, null,
+					model);
 
 		} catch (Exception e) {
 			return UiUtils.showMessageWithRedirect("시스템에 문제가 발생하였습니다.", "/board/list", Method.GET, null, model);
@@ -58,10 +61,12 @@ public class BoardController {
 	}
 
 	@GetMapping(value = "/board/list")
-	public String openBoardList(Model model) {
-
-		List<BoardDTO> boardList = boardService.getBoardList();
+	public String openBoardList(@ModelAttribute("params") BoardDTO params, Model model) {
+		System.out.println("[1] 컨트롤러를 호출함 /board/list");
+		List<BoardDTO> boardList = boardService.getBoardList(params);
 		model.addAttribute("boardList", boardList);
+		System.out.println("[8] 컨트롤러에서 boardList 리턴");
+
 		return "board/list";
 	}
 
@@ -102,7 +107,8 @@ public class BoardController {
 				return UiUtils.showMessageWithRedirect("게시글 삭제에 실패하였습니다.", "/board/list", Method.GET, null, model);
 			}
 		} catch (DataAccessException e) {
-			return UiUtils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다.", "/board/list", Method.GET, null, model);
+			return UiUtils.showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다.", "/board/list", Method.GET, null,
+					model);
 		} catch (Exception e) {
 			return UiUtils.showMessageWithRedirect("시스템에 문제가 발생하였습니다.", "/board/list", Method.GET, null, model);
 		}

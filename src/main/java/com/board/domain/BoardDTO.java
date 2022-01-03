@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class BoardDTO {
+public class BoardDTO extends CommonDTO {
 
 	/** 번호 (PK) */
 	private Long idx;
@@ -33,23 +33,11 @@ public class BoardDTO {
 	/** 삭제 여부 */
 	private String deleteYn;
 
-	/** 등록일 */
-	private LocalDateTime insertTime;
-
-	/** 수정일 */
-	private LocalDateTime updateTime;
-
-	/** 삭제일 */
-	private LocalDateTime deleteTime;
-
 	@Override
 	public String toString() {
 		return "BoardDTO [idx=" + idx + ", title=" + title + ", content=" + content + ", writer=" + writer
 				+ ", viewCnt=" + viewCnt + ", noticeYn=" + noticeYn + ", secretYn=" + secretYn + ", deleteYn="
-				+ deleteYn + ", insertTime=" + insertTime + ", updateTime=" + updateTime + ", deleteTime=" + deleteTime
-				+ "]";
+				+ deleteYn + "]";
 	}
-	
-	
 
 }

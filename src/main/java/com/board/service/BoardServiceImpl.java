@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.board.domain.BoardDTO;
 import com.board.mapper.BoardMapper;
+import com.board.paging.Criteria;
+import com.board.paging.PaginationInfo;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -25,12 +27,12 @@ public class BoardServiceImpl implements BoardService {
 			// idx가 있으면 글을 수정
 			queryResult = boardMapper.updateBoard(params);
 		}
-		
+
 //		// 트랜잭션 테스트용
 //		BoardDTO board = null;
 //		System.out.println("***** 여기가 테스트 ********");
 //		System.out.println(board.getTitle());
-		
+
 		return (queryResult == 1) ? true : false;
 	}
 
@@ -50,17 +52,28 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<BoardDTO> getBoardList() {
+	public List<BoardDTO> getBoardList(BoardDTO params) {
+		System.out.println("[2] 서비스를 호출함 getBoardList");
 		List<BoardDTO> boardList = Collections.emptyList();
-		int boardTotalCount = boardMapper.selectBoardTotalCount();
+
+		int boardTotalCount = boardMapper.selectBoardTotalCount(params);
+		System.out.println("[3] 전체 글 개수를 셈 (" + boardTotalCount + "개)");
+
+		PaginationInfo paginationInfo = new PaginationInfo(params);
+		paginationInfo.setTotalRecordCount(boardTotalCount);
+
+		params.setPaginationInfo(paginationInfo);
+
 		if (boardTotalCount > 0) {
-			boardList = boardMapper.selectBoardList();
+			System.out.println("[7] 게시글 리스트 검색");
+			boardList = boardMapper.selectBoardList(params);
 		}
+
 		return boardList;
 	}
 
 	@Override
-	public boolean cntPlus(Long idx) { 
+	public boolean cntPlus(Long idx) {
 		return boardMapper.cntPlus(idx);
 	}
 
